@@ -1,0 +1,27 @@
+.autocomplete-suggestions { border: 1px solid #DDD; background: #FFF; overflow: auto; box-sizing: border-box; }
+.autocomplete-suggestion { padding: 5px 5px; white-space: nowrap; overflow: hidden; cursor: pointer; }
+.autocomplete-no-suggestion { padding: 5px 5px; white-space: nowrap; overflow: hidden; }
+.autocomplete-selected { background: #F0F0F0; }
+.autocomplete-suggestions strong { font-weight: normal; color: #3399FF; }
+.autocomplete-group { padding: 2px 5px; }
+.autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
+
+input.cmb-ajax-search { width: 30em; }
+.cmb-ajax-search-results { width: 30em; padding: 0 1px; box-sizing: border-box; margin-bottom: 5px; }
+.cmb-ajax-search-results li { margin: 0; border-bottom: 1px solid #f4f4f4; padding: 7px 5px; background: #fff; }
+.cmb-ajax-search-results li:last-child { border-bottom: none; }
+.cmb-ajax-search-results li span.hndl { font-size: 13px; line-height: 16px; color: #ccc; margin: 0 8px 0 0; height: 16px; cursor: s-resize; }
+.cmb-ajax-search-results li span.hndl:before { content: '\2807'; }
+.cmb-ajax-search-results li a.edit-link { color: #333; text-decoration: none; }
+.cmb-ajax-search-results li a.edit-link:hover { color: #00a0d2; text-decoration: underline; }
+.cmb-ajax-search-results li a.remover { float: right; cursor:pointer; color: #ccc; }
+.cmb-ajax-search-results li a.remover span { height: 16px; line-height: 16px; font-size: 14px; }
+.cmb-ajax-search-results li a.remover span.dashicons-dismiss { display: none; }
+.cmb-ajax-search-results li a.remover:hover { color: #C00; }
+.cmb-ajax-search-results li a.remover:hover span.dashicons-dismiss { display: inline-block; }
+.cmb-ajax-search-results li a.remover:hover span.dashicons-no { display: none; }
+.cmb-ajax-search-results .ui-state-highlight { background: #f4f4f4; }
+.cmb-ajax-search-spinner { position: absolute; margin: 9px 0 0 -25px; width: 15px; display:none; }
+
+.columns-2 #postbox-container-1 .cmb-ajax-search-spinner { right: 25px; margin: -23px 0 0 0; }
+
