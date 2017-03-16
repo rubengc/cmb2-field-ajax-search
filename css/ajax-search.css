@@ -25,3 +25,5 @@ input.cmb-ajax-search { width: 30em; }
 
 .columns-2 #postbox-container-1 .cmb-ajax-search-spinner { right: 25px; margin: -23px 0 0 0; }
 
+#side-sortables .cmb2-wrap input + input.cmb-ajax-search { margin-top: 1px; } /* Fix extra margin from CMB2 */
+

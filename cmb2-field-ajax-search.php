@@ -10,10 +10,11 @@ Author URI: http://rubengc.com/
 License: GPLv2+
 */
 
-// This plugin is an update of CMB2 Field Type: Post Search Ajax (https://github.com/alexis-magina/cmb2-field-post-search-ajax)
+// This plugin is based on CMB2 Field Type: Post Search Ajax (https://github.com/alexis-magina/cmb2-field-post-search-ajax)
 // Special thanks to Magina (http://magina.fr/) for him awesome work
 
 if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
+
 	/**
 	 * Class CMB2_Field_Ajax_Search
 	 */
@@ -32,6 +33,11 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 			add_action( 'cmb2_render_post_ajax_search', array( $this, 'render' ), 10, 5 );
 			add_action( 'cmb2_render_user_ajax_search', array( $this, 'render' ), 10, 5 );
 			add_action( 'cmb2_render_term_ajax_search', array( $this, 'render' ), 10, 5 );
+
+            // Display
+            add_filter( 'cmb2_pre_field_display_post_ajax_search', array( $this, 'display' ), 10, 3 );
+            add_filter( 'cmb2_pre_field_display_user_ajax_search', array( $this, 'display' ), 10, 3 );
+            add_filter( 'cmb2_pre_field_display_term_ajax_search', array( $this, 'display' ), 10, 3 );
 
 			// Sanitize
 			add_action( 'cmb2_sanitize_post_ajax_search', array( $this, 'sanitize' ), 10, 4 );
@@ -114,6 +120,43 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 			$field_type->_desc( true, true );
 
 		}
+
+        /**
+         * Display field
+         */
+        public function display( $pre_output, $field, $display ) {
+            $object_type = str_replace( 'cmb2_pre_field_display_', '', str_replace( '_ajax_search', '', current_filter() ) );
+
+            ob_start();
+
+            $field->peform_param_callback( 'before_display_wrap' );
+
+            printf( "<div class=\"cmb-column %s\" data-fieldtype=\"%s\">\n", $field->row_classes( 'display' ), $field->type() );
+
+            $field->peform_param_callback( 'before_display' );
+
+            if( is_array( $field->value ) ) : ?>
+                <?php foreach( $field->value as $value ) : ?>
+                    <a href="<?php echo $this->object_link( $field->args['id'], $value, $object_type ); ?>" class="edit-link">
+                        <?php echo $this->object_text( $field->args['id'], $value, $object_type ); ?>
+                    </a> <br>
+                <?php endforeach; ?>
+            <?php else : ?>
+                <a href="<?php echo $this->object_link( $field->args['id'], $field->value, $object_type ); ?>" class="edit-link">
+                    <?php echo $this->object_text( $field->args['id'], $field->value, $object_type ); ?>
+                </a>
+            <?php endif;
+
+            $field->peform_param_callback( 'after_display' );
+
+            echo "\n</div>";
+
+            $field->peform_param_callback( 'after_display_wrap' );
+
+            $pre_output = ob_get_clean();
+
+            return $pre_output;
+        }
 
 		/**
 		 * Optionally save the latitude/longitude values into two custom fields
