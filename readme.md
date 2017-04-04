@@ -3,6 +3,8 @@ CMB2 Field Type: Ajax Search
 
 Custom fields for [CMB2](https://github.com/WebDevStudios/CMB2) to attach posts, users or terms to each others.
 
+![example](example.gif)
+
 Once activated, this plugin adds three new field types `post_ajax_search`, `user_ajax_search` and `term_ajax_search`.
 
 This plugin is an update of [CMB2 Field Type: Post Search Ajax](https://github.com/alexis-magina/cmb2-field-post-search-ajax) by [Magina](http://magina.fr/) with support to attach posts, users or terms.
@@ -151,10 +153,6 @@ If multiple == false will return the ID of attached object:
 
 If multiple == true will return an array of IDs of attached object:
 `get_post_meta( get_the_ID(), 'your_field_id', false );`
-
-## Screenshot
-
-![example](example.gif)
 
 ## Changelog
 
