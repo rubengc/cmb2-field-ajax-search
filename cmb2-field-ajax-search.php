@@ -29,6 +29,8 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 		 * Initialize the plugin by hooking into CMB2
 		 */
 		public function __construct() {
+			add_action( 'admin_enqueue_scripts', array( $this, 'setup_admin_scripts' ) );
+
 			// Render
 			add_action( 'cmb2_render_post_ajax_search', array( $this, 'render' ), 10, 5 );
 			add_action( 'cmb2_render_user_ajax_search', array( $this, 'render' ), 10, 5 );
@@ -52,7 +54,6 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 		 * Render field
 		 */
 		public function render( $field, $value, $object_id, $object_type, $field_type ) {
-			$this->setup_admin_scripts();
 			$field_name = $field->_name();
             $default_limit = 1;
 
