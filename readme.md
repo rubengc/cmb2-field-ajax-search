@@ -75,7 +75,7 @@ function cmb2_ajax_search_metabox() {
 		'name'          => __( 'Attached user', 'cmb2' ),
 		'desc'          => __( 'Field description (optional)', 'cmb2' ),
 		'id'            => $prefix . 'user',
-		'type'          => 'post_ajax_search',
+		'type'          => 'user_ajax_search',
 		'query_args'	=> array(
 			'role'				=> array( 'Subscriber' ),
 			'search_columns' 	=> array( 'user_login', 'user_email' )
@@ -87,7 +87,7 @@ function cmb2_ajax_search_metabox() {
 		'name'          => __( 'Multiple users', 'cmb2' ),
 		'desc'          => __( 'Field description (optional)', 'cmb2' ),
 		'id'            => $prefix . 'users',
-		'type'          => 'post_ajax_search',
+		'type'          => 'user_ajax_search',
 		'multiple'      => true,
 		'limit'      	=> 5,
 		'query_args'	=> array(
@@ -100,7 +100,7 @@ function cmb2_ajax_search_metabox() {
 		'name'          => __( 'Attached term', 'cmb2' ),
 		'desc'          => __( 'Field description (optional)', 'cmb2' ),
 		'id'            => $prefix . 'term',
-		'type'          => 'post_ajax_search',
+		'type'          => 'term_ajax_search',
 		'query_args'	=> array(
 			'taxonomy'			=> 'category',
 			'childless'			=> true
@@ -112,7 +112,7 @@ function cmb2_ajax_search_metabox() {
 		'name'          => __( 'Multiple terms', 'cmb2' ),
 		'desc'          => __( 'Field description (optional)', 'cmb2' ),
 		'id'            => $prefix . 'terms',
-		'type'          => 'post_ajax_search',
+		'type'          => 'term_ajax_search',
 		'multiple'      => true,
 		'limit'      	=> -1,
 		'query_args'	=> array(

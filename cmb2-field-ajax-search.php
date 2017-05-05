@@ -179,8 +179,8 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 		 */
 		public function setup_admin_scripts() {
 
-			wp_register_script( 'jquery-autocomplete', plugins_url( 'js/jquery.autocomplete.min.js', __FILE__ ), array( 'jquery' ), self::VERSION );
-			wp_register_script( 'cmb-ajax-search', plugins_url( 'js/ajax-search.js', __FILE__ ), array( 'jquery', 'jquery-autocomplete', 'jquery-ui-sortable' ), self::VERSION );
+			wp_register_script( 'jquery-autocomplete', plugins_url( 'js/jquery.autocomplete.min.js', __FILE__ ), array( 'jquery' ), self::VERSION, true );
+			wp_register_script( 'cmb-ajax-search', plugins_url( 'js/ajax-search.js', __FILE__ ), array( 'jquery', 'jquery-autocomplete', 'jquery-ui-sortable' ), self::VERSION, true );
 
 			wp_localize_script( 'cmb-ajax-search', 'cmb_ajax_search', array(
 				'ajaxurl' 	=> admin_url( 'admin-ajax.php' ),
