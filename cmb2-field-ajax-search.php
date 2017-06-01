@@ -4,7 +4,7 @@ Plugin Name: CMB2 Field Type: Ajax Search
 Plugin URI: https://github.com/rubengc/cmb2-field-ajax-search
 GitHub Plugin URI: https://github.com/rubengc/cmb2-field-ajax-search
 Description: CMB2 field type to attach posts, users or terms.
-Version: 1.0.0
+Version: 1.0.1
 Author: Ruben Garcia
 Author URI: http://rubengc.com/
 License: GPLv2+
@@ -23,7 +23,7 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 		/**
 		 * Current version number
 		 */
-		const VERSION = '1.0.0';
+		const VERSION = '1.0.1';
 
 		/**
 		 * Initialize the plugin by hooking into CMB2
@@ -179,8 +179,8 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 		 */
 		public function setup_admin_scripts() {
 
-			wp_register_script( 'jquery-autocomplete', plugins_url( 'js/jquery.autocomplete.min.js', __FILE__ ), array( 'jquery' ), self::VERSION, true );
-			wp_register_script( 'cmb-ajax-search', plugins_url( 'js/ajax-search.js', __FILE__ ), array( 'jquery', 'jquery-autocomplete', 'jquery-ui-sortable' ), self::VERSION, true );
+			wp_register_script( 'jquery-autocomplete-ajax-search', plugins_url( 'js/jquery.autocomplete.min.js', __FILE__ ), array( 'jquery' ), self::VERSION, true );
+			wp_register_script( 'cmb-ajax-search', plugins_url( 'js/ajax-search.js', __FILE__ ), array( 'jquery', 'jquery-autocomplete-ajax-search', 'jquery-ui-sortable' ), self::VERSION, true );
 
 			wp_localize_script( 'cmb-ajax-search', 'cmb_ajax_search', array(
 				'ajaxurl' 	=> admin_url( 'admin-ajax.php' ),

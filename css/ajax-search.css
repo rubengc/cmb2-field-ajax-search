@@ -6,8 +6,8 @@
 .autocomplete-group { padding: 2px 5px; }
 .autocomplete-group strong { display: block; border-bottom: 1px solid #000; }
 
-input.cmb-ajax-search { width: 30em; }
-.cmb-ajax-search-results { width: 30em; padding: 0 1px; box-sizing: border-box; margin-bottom: 5px; }
+input.cmb-ajax-search { width: 25em; }
+.cmb-ajax-search-results { width: 25em; padding: 0 1px; box-sizing: border-box; margin-bottom: 5px; }
 .cmb-ajax-search-results li { margin: 0; border-bottom: 1px solid #f4f4f4; padding: 7px 5px; background: #fff; }
 .cmb-ajax-search-results li:last-child { border-bottom: none; }
 .cmb-ajax-search-results li span.hndl { font-size: 13px; line-height: 16px; color: #ccc; margin: 0 8px 0 0; height: 16px; cursor: s-resize; }
@@ -27,3 +27,6 @@ input.cmb-ajax-search { width: 30em; }
 
 #side-sortables .cmb2-wrap input + input.cmb-ajax-search { margin-top: 1px; } /* Fix extra margin from CMB2 */
 
+/* Repeatable groups */
+.cmb-repeatable-group .cmb-type-post-ajax-search .cmb-td, .cmb-repeatable-group .cmb-type-user-ajax-search .cmb-td, .cmb-repeatable-group .cmb-type-term-ajax-search .cmb-td { position: relative; }
+.cmb-repeatable-group .cmb-ajax-search-spinner { position: absolute; top: 50%; right: 10px; margin: -7px 0 0 0; }

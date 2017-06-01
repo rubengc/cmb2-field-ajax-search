@@ -156,5 +156,10 @@ If multiple == true will return an array of IDs of attached object:
 
 ## Changelog
 
+### 1.0.1
+* Group fields support
+* Widget area support
+* Use of devbridgeAutocomplete() instead of autocomplete() to avoid errors
+
 ### 1.0.0
 * Initial commit
