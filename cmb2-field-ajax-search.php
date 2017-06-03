@@ -1,14 +1,18 @@
 <?php
-/*
-Plugin Name: CMB2 Field Type: Ajax Search
-Plugin URI: https://github.com/rubengc/cmb2-field-ajax-search
-GitHub Plugin URI: https://github.com/rubengc/cmb2-field-ajax-search
-Description: CMB2 field type to attach posts, users or terms.
-Version: 1.0.1
-Author: Ruben Garcia
-Author URI: http://rubengc.com/
-License: GPLv2+
-*/
+/**
+ * @package      CMB2\Field_Ajax_Search
+ * @author       Tsunoa
+ * @copyright    Copyright (c) Tsunoa
+ *
+ * Plugin Name: CMB2 Field Type: Ajax Search
+ * Plugin URI: https://github.com/rubengc/cmb2-field-ajax-search
+ * GitHub Plugin URI: https://github.com/rubengc/cmb2-field-ajax-search
+ * Description: CMB2 field type to attach posts, users or terms.
+ * Version: 1.0.1
+ * Author: Tsunoa
+ * Author URI: https://tsunoa.com/
+ * License: GPLv2+
+ */
 
 // This plugin is based on CMB2 Field Type: Post Search Ajax (https://github.com/alexis-magina/cmb2-field-post-search-ajax)
 // Special thanks to Magina (http://magina.fr/) for him awesome work
