@@ -8,7 +8,7 @@
  * Plugin URI: https://github.com/rubengc/cmb2-field-ajax-search
  * GitHub Plugin URI: https://github.com/rubengc/cmb2-field-ajax-search
  * Description: CMB2 field type to attach posts, users or terms.
- * Version: 1.0.1
+ * Version: 1.0.
  * Author: Tsunoa
  * Author URI: https://tsunoa.com/
  * License: GPLv2+
@@ -27,7 +27,7 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 		/**
 		 * Current version number
 		 */
-		const VERSION = '1.0.1';
+		const VERSION = '1.0.2';
 
 		/**
 		 * Initialize the plugin by hooking into CMB2
