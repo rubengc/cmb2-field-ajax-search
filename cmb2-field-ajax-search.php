@@ -34,7 +34,8 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 		 */
 		public function __construct() {
 			add_action( 'admin_enqueue_scripts', array( $this, 'setup_admin_scripts' ) );
-
+			add_action( 'wp_enqueue_scripts', array( $this, 'setup_admin_scripts' ) );
+			
 			// Render
 			add_action( 'cmb2_render_post_ajax_search', array( $this, 'render' ), 10, 5 );
 			add_action( 'cmb2_render_user_ajax_search', array( $this, 'render' ), 10, 5 );
