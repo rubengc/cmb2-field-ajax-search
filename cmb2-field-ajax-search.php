@@ -188,7 +188,8 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 
 			wp_localize_script( 'cmb-ajax-search', 'cmb_ajax_search', array(
 				'ajaxurl' 	=> admin_url( 'admin-ajax.php' ),
-				'nonce'		=> wp_create_nonce( 'cmb_ajax_search_get_results' )
+				'nonce'		=> wp_create_nonce( 'cmb_ajax_search_get_results' ),
+				'options' 	=> apply_filters( 'cmb_field_ajax_search_autocomplete_options', array() )
 			) );
 
 			wp_enqueue_script( 'cmb-ajax-search' );

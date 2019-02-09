@@ -8,7 +8,7 @@
 			var object_type = $(this).attr('data-object-type');
 			var query_args 	= $(this).attr('data-query-args');
 
-			$(this).devbridgeAutocomplete({
+			$(this).devbridgeAutocomplete(Object.assign({
 				serviceUrl: cmb_ajax_search.ajaxurl,
 				type: 'POST',
 				triggerSelectOnValidInput: false,
@@ -78,7 +78,8 @@
 						$('input[name=' + field_name + ']').val( suggestion.id ).change();
 					}
 				}
-			});
+			},
+			cmb_ajax_search.options));
 
 			if( $(this).attr('data-sortable') == 1 ){
 				$('#' + field_id + '_results').sortable({
