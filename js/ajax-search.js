@@ -3,7 +3,7 @@
 		$('.cmb-ajax-search:not([data-ajax-search="true"])').each(function () {
 			$(this).attr('data-ajax-search', true);
 
-			var field_id 	= $(this).attr('id').replace( new RegExp('_input$'), '' ).replace(/[\[\]']+/g, '_'); // Field id, the true one field
+			var field_id 	= $(this).attr('id').replace(/[\[\]']+/g, '_'); // Field id, the true one field
 			var object_type = $(this).attr('data-object-type');
 			var query_args 	= $(this).attr('data-query-args');
 
@@ -50,17 +50,17 @@
 				onSelect: function ( suggestion ) {
 					$(this).devbridgeAutocomplete('clearCache');
                     
-					var field_name  = $(this).attr('name').replace( new RegExp('_input$'), '' );
+					var field_name  = $(this).attr('name');
 					var multiple 	= $(this).attr('data-multiple');
 					var limit 	    = parseInt( $(this).attr('data-limit') );
 					var sortable    = $(this).attr('data-sortable');
-                    var field_name_temp = field_name.replace( /[\[\]']+/g, '_' );
+                    var field_name_temp = field_name.substring(1).replace( /[\[\]']+/g, '_' );
                     
 					if( multiple == 1 ) {
 						// Multiple
 						$('#' + field_name_temp + '_results' ).append( '<li>' +
 							( ( sortable == 1 ) ? '<span class="hndl"></span>' : '' ) +
-							'<input type="hidden" name="' + field_name + '[]" value="' + suggestion.id + '">' +
+							'<input type="hidden" name="' + field_name.substring(1) + '[]" value="' + suggestion.id + '">' +
 							'<a href="' + suggestion.link + '" target="_blank" class="edit-link">' + suggestion.value + '</a>' +
 							'<a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a>' +
 							'</li>' );

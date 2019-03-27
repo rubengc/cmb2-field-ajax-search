@@ -62,7 +62,7 @@ function cmb2_ajax_search_metabox() {
 		'desc'          => __( 'Field description (optional)', 'cmb2' ),
 		'id'            => $prefix . 'posts',
 		'type'          => 'post_ajax_search',
-		'multiple'      => true,
+		'multiple-item' => true,
 		'limit'      	=> 10,
 		'query_args'	=> array(
 			'post_type'			=> array( 'post', 'page' ),
@@ -88,7 +88,7 @@ function cmb2_ajax_search_metabox() {
 		'desc'          => __( 'Field description (optional)', 'cmb2' ),
 		'id'            => $prefix . 'users',
 		'type'          => 'user_ajax_search',
-		'multiple'      => true,
+		'multiple-item' => true,
 		'limit'      	=> 5,
 		'query_args'	=> array(
 			'role__not_in'		=> array( 'Administrator', 'Editor' ),
@@ -113,7 +113,7 @@ function cmb2_ajax_search_metabox() {
 		'desc'          => __( 'Field description (optional)', 'cmb2' ),
 		'id'            => $prefix . 'terms',
 		'type'          => 'term_ajax_search',
-		'multiple'      => true,
+		'multiple-item' => true,
 		'limit'      	=> -1,
 		'query_args'	=> array(
 			'taxonomy'			=> 'post_tag',
@@ -155,6 +155,12 @@ If multiple == true will return an array of IDs of attached object:
 `get_post_meta( get_the_ID(), 'your_field_id', false );`
 
 ## Changelog
+
+### 1.0.3
+
+* Fixed issues with repeatable fields
+* Removed unused code
+* Moved to new paramenter `multiple-item` to avoid conflicts with CMB2
 
 ### 1.0.2
 * Updated devbridgeAutocomplete lib

@@ -27,7 +27,7 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 		/**
 		 * Current version number
 		 */
-		const VERSION = '1.0.2';
+		const VERSION = '1.0.3';
 
 		/**
 		 * Initialize the plugin by hooking into CMB2
@@ -116,8 +116,8 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 
 			echo $field_type->input( array(
 				'type' 				=> 'text',
-				'name' 				=> $field->_name() . '_input',
-				'id'				=> $field_name . '_input',
+				'name' 				=> '_' . $field->_name(),
+				'id'				=> $field_name,
 				'class'				=> 'cmb-ajax-search cmb-' . $object_to_search . '-ajax-search',
 				'value' 			=> $input_value,
 				'desc'				=> false,
