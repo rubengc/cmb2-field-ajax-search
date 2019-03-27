@@ -3,7 +3,6 @@
 		$('.cmb-ajax-search:not([data-ajax-search="true"])').each(function () {
 			$(this).attr('data-ajax-search', true);
 
-			var input_id 	= $(this).attr('id'); // Field id with '_input' sufix (the searchable field)
 			var field_id 	= $(this).attr('id').replace( new RegExp('_input$'), '' ).replace(/[\[\]']+/g, '_'); // Field id, the true one field
 			var object_type = $(this).attr('data-object-type');
 			var query_args 	= $(this).attr('data-query-args');
@@ -76,7 +75,7 @@
 						}
 					} else {
 						// Singular
-						$('input[name=' + field_name + ']').val( suggestion.id ).change();
+						$('input[name="' + field_name + '"]').val( suggestion.id ).change();
 					}
 				}
 			},

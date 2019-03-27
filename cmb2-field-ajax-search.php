@@ -68,16 +68,16 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
             // Current filter is cmb2_render_{$object_to_search}_ajax_search ( post, user or term )
 			$object_to_search = str_replace( 'cmb2_render_', '', str_replace( '_ajax_search', '', current_filter() ) );
 
+            if( ! is_array( $value ) && strpos( $value, ', ' ) ) {
+                $value = explode(', ', $value);
+            }
+
 			if( $field->args( 'multiple' ) == true ) {
                 $default_limit = -1; // 0 or -1 means unlimited
 
 				?><ul id="<?php echo $field_name; ?>_results" class="cmb-ajax-search-results cmb-<?php echo $object_to_search; ?>-ajax-search-results"><?php
 
 				if( isset( $value ) && ! empty( $value ) ){
-
-                    if( ! is_array( $value ) && strpos( $value, ', ' ) ) {
-                        $value = explode(', ', $value);
-                    }
 					if( ! is_array( $value ) ) {
 						$value = array( $value );
 					}
