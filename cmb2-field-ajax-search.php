@@ -45,8 +45,6 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
             add_filter( 'cmb2_pre_field_display_user_ajax_search', array( $this, 'display' ), 10, 3 );
             add_filter( 'cmb2_pre_field_display_term_ajax_search', array( $this, 'display' ), 10, 3 );
 
-            add_filter( 'cmb2_override_meta_value', array( $this, 'get_value' ), 10, 4 );
-
 			// Sanitize
  			add_action( 'cmb2_sanitize_post_ajax_search', array( $this, 'sanitize' ), 10, 4 );
 			add_action( 'cmb2_sanitize_user_ajax_search', array( $this, 'sanitize' ), 10, 4 );
@@ -54,14 +52,6 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 
 			// Ajax request
 			add_action( 'wp_ajax_cmb_ajax_search_get_results', array( $this, 'get_results' ) );
-		}
-
-		public function get_value( $string, $object_id, $a, $object ) {
-            if ( ( $object->args( 'type' ) === 'post_ajax_search' || $object->args( 'type' ) === 'puser_ajax_search' || $object->args( 'type' ) === 'term_ajax_search' ) && $object->group ) {
-                $data = get_metadata( $a['type'], $a['id'], $a['field_id'], ( $a['single'] || $a['repeat'] ) );
-                return $data[ 0 ];
-            }
-            return $string;
 		}
 
 		public function convert_as_id_css( $name ) {
@@ -82,7 +72,7 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
                 $value = explode(', ', $value);
             }
 
-			if( $field->args( 'multiple' ) == true ) {
+			if( $field->args( 'multiple-item' ) == true ) {
                 $default_limit = -1; // 0 or -1 means unlimited
 
 				?><ul id="<?php echo $field_name; ?>_results" class="cmb-ajax-search-results cmb-<?php echo $object_to_search; ?>-ajax-search-results"><?php
@@ -131,7 +121,7 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 				'class'				=> 'cmb-ajax-search cmb-' . $object_to_search . '-ajax-search',
 				'value' 			=> $input_value,
 				'desc'				=> false,
-				'data-multiple'		=> $field->args( 'multiple' ) ? $field->args( 'multiple' ) : '0',
+				'data-multiple'		=> $field->args( 'multiple-item' ) ? $field->args( 'multiple-item' ) : '0',
 				'data-limit'		=> $field->args( 'limit' ) ? $field->args( 'limit' ) : $default_limit,
 				'data-sortable'		=> $field->args( 'sortable' ) ? $field->args( 'sortable' ) : '0',
 				'data-object-type'	=> $object_to_search,
