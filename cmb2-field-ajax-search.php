@@ -46,9 +46,9 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
             add_filter( 'cmb2_pre_field_display_term_ajax_search', array( $this, 'display' ), 10, 3 );
 
 			// Sanitize
-			//add_action( 'cmb2_sanitize_post_ajax_search', array( $this, 'sanitize' ), 10, 4 );
-			//add_action( 'cmb2_sanitize_user_ajax_search', array( $this, 'sanitize' ), 10, 4 );
-			//add_action( 'cmb2_sanitize_term_ajax_search', array( $this, 'sanitize' ), 10, 4 );
+ 			add_action( 'cmb2_sanitize_post_ajax_search', array( $this, 'sanitize' ), 10, 4 );
+			add_action( 'cmb2_sanitize_user_ajax_search', array( $this, 'sanitize' ), 10, 4 );
+			add_action( 'cmb2_sanitize_term_ajax_search', array( $this, 'sanitize' ), 10, 4 );
 
 			// Ajax request
 			add_action( 'wp_ajax_cmb_ajax_search_get_results', array( $this, 'get_results' ) );
@@ -171,13 +171,16 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 		 * Optionally save the latitude/longitude values into two custom fields
 		 */
 		public function sanitize( $override_value, $value, $object_id, $field_args ) {
-			$value = false;
+            if ( !is_array( $value ) || !( array_key_exists('repeatable', $field_args ) && $field_args['repeatable'] == TRUE ) ) {
+                return $override_value;
+            }
 
-			if( isset( $field_args['render_row_cb'][0]->data_to_save[$field_args['id']] ) ) {
-				$value = $field_args['render_row_cb'][0]->data_to_save[$field_args['id']];
-			}
+            $new_values = array();
+            foreach ( $value as $key => $val ) {
+                $new_values[$key] = array_filter( array_map( 'sanitize_text_field', $val ) );
+            }
 
-			return $value;
+            return array_filter( array_values( $new_values ) );
 		}
 
 		/**
