@@ -45,6 +45,8 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
             add_filter( 'cmb2_pre_field_display_user_ajax_search', array( $this, 'display' ), 10, 3 );
             add_filter( 'cmb2_pre_field_display_term_ajax_search', array( $this, 'display' ), 10, 3 );
 
+            add_filter( 'cmb2_override_meta_value', array( $this, 'get_value' ), 10, 4 );
+
 			// Sanitize
  			add_action( 'cmb2_sanitize_post_ajax_search', array( $this, 'sanitize' ), 10, 4 );
 			add_action( 'cmb2_sanitize_user_ajax_search', array( $this, 'sanitize' ), 10, 4 );
@@ -52,6 +54,14 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 
 			// Ajax request
 			add_action( 'wp_ajax_cmb_ajax_search_get_results', array( $this, 'get_results' ) );
+		}
+
+		public function get_value( $string, $object_id, $a, $object ) {
+            if ( ( $object->args( 'type' ) === 'post_ajax_search' || $object->args( 'type' ) === 'puser_ajax_search' || $object->args( 'type' ) === 'term_ajax_search' ) && $object->group ) {
+                $data = get_metadata( $a['type'], $a['id'], $a['field_id'], ( $a['single'] || $a['repeat'] ) );
+                return $data[ 0 ];
+            }
+            return $string;
 		}
 
 		public function convert_as_id_css( $name ) {
@@ -175,7 +185,6 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 		 * Optionally save the latitude/longitude values into two custom fields
 		 */
 		public function sanitize( $override_value, $value, $object_id, $field_args ) {
-		error_log($field_args['id']);
             if ( !is_array( $value ) || !( array_key_exists('repeatable', $field_args ) && $field_args['repeatable'] == TRUE ) ) {
                 return $override_value;
             }
