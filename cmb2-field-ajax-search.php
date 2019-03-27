@@ -46,19 +46,23 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
             add_filter( 'cmb2_pre_field_display_term_ajax_search', array( $this, 'display' ), 10, 3 );
 
 			// Sanitize
-			add_action( 'cmb2_sanitize_post_ajax_search', array( $this, 'sanitize' ), 10, 4 );
-			add_action( 'cmb2_sanitize_user_ajax_search', array( $this, 'sanitize' ), 10, 4 );
-			add_action( 'cmb2_sanitize_term_ajax_search', array( $this, 'sanitize' ), 10, 4 );
+			//add_action( 'cmb2_sanitize_post_ajax_search', array( $this, 'sanitize' ), 10, 4 );
+			//add_action( 'cmb2_sanitize_user_ajax_search', array( $this, 'sanitize' ), 10, 4 );
+			//add_action( 'cmb2_sanitize_term_ajax_search', array( $this, 'sanitize' ), 10, 4 );
 
 			// Ajax request
 			add_action( 'wp_ajax_cmb_ajax_search_get_results', array( $this, 'get_results' ) );
+		}
+
+		public function convert_as_id_css( $name ) {
+            return str_replace( '__', '_', str_replace( '[', '_', str_replace( ']', '_', $name ) ) );
 		}
 
 		/**
 		 * Render field
 		 */
 		public function render( $field, $value, $object_id, $object_type, $field_type ) {
-			$field_name = $field->_name();
+			$field_name = $this->convert_as_id_css($field->_name());
             $default_limit = 1;
 
             // Current filter is cmb2_render_{$object_to_search}_ajax_search ( post, user or term )
@@ -78,9 +82,9 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
                         ?>
 						<li>
                             <?php if( $field->args( 'sortable' ) ) : ?><span class="hndl"></span><?php endif; ?>
-                            <input type="hidden" name="<?php echo $field_name; ?>[]" value="<?php echo $val; ?>">
-                            <a href="<?php echo $this->object_link( $field_name, $val, $object_to_search ); ?>" target="_blank" class="edit-link">
-                                <?php echo $this->object_text( $field_name, $val, $object_to_search ); ?>
+                            <input type="hidden" name="<?php echo $field->_name(); ?>[]" value="<?php echo $val; ?>">
+                            <a href="<?php echo $this->object_link( $field->_name(), $val, $object_to_search ); ?>" target="_blank" class="edit-link">
+                                <?php echo $this->object_text( $field->_name(), $val, $object_to_search ); ?>
                             </a>
                             <a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a>
                         </li>
@@ -108,7 +112,7 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 
 			echo $field_type->input( array(
 				'type' 				=> 'text',
-				'name' 				=> $field_name . '_input',
+				'name' 				=> $field->_name() . '_input',
 				'id'				=> $field_name . '_input',
 				'class'				=> 'cmb-ajax-search cmb-' . $object_to_search . '-ajax-search',
 				'value' 			=> $input_value,
@@ -167,12 +171,10 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 		 * Optionally save the latitude/longitude values into two custom fields
 		 */
 		public function sanitize( $override_value, $value, $object_id, $field_args ) {
-			$fid = $field_args['id'];
+			$value = false;
 
-			if($field_args['render_row_cb'][0]->data_to_save[$field_args['id']]) {
+			if( isset( $field_args['render_row_cb'][0]->data_to_save[$field_args['id']] ) ) {
 				$value = $field_args['render_row_cb'][0]->data_to_save[$field_args['id']];
-			} else {
-				$value = false;
 			}
 
 			return $value;

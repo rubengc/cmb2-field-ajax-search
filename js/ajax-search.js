@@ -4,7 +4,7 @@
 			$(this).attr('data-ajax-search', true);
 
 			var input_id 	= $(this).attr('id'); // Field id with '_input' sufix (the searchable field)
-			var field_id 	= $(this).attr('id').replace( new RegExp('_input$'), '' ); // Field id, the true one field
+			var field_id 	= $(this).attr('id').replace( new RegExp('_input$'), '' ).replace(/[\[\]']+/g, '_'); // Field id, the true one field
 			var object_type = $(this).attr('data-object-type');
 			var query_args 	= $(this).attr('data-query-args');
 
@@ -50,15 +50,16 @@
 				},
 				onSelect: function ( suggestion ) {
 					$(this).devbridgeAutocomplete('clearCache');
-
-					var field_name  = $(this).attr('id').replace( new RegExp('_input$'), '' );
+                    
+					var field_name  = $(this).attr('name').replace( new RegExp('_input$'), '' );
 					var multiple 	= $(this).attr('data-multiple');
 					var limit 	    = parseInt( $(this).attr('data-limit') );
 					var sortable    = $(this).attr('data-sortable');
-
+                    var field_name_temp = field_name.replace( /[\[\]']+/g, '_' );
+                    
 					if( multiple == 1 ) {
 						// Multiple
-						$('#' + field_name + '_results' ).append( '<li>' +
+						$('#' + field_name_temp + '_results' ).append( '<li>' +
 							( ( sortable == 1 ) ? '<span class="hndl"></span>' : '' ) +
 							'<input type="hidden" name="' + field_name + '[]" value="' + suggestion.id + '">' +
 							'<a href="' + suggestion.link + '" target="_blank" class="edit-link">' + suggestion.value + '</a>' +
@@ -68,7 +69,7 @@
 						$(this).val( '' );
 
 						// Checks if there is the max allowed results, limit < 0 means unlimited
-						if( limit > 0 && limit == $('#' + field_name + '_results li').length ) {
+						if( limit > 0 && limit == $('#' + field_name_temp + '_results li').length ) {
 							$(this).prop( 'disabled', 'disabled' );
 						} else {
 							$(this).focus();
