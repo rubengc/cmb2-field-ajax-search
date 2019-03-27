@@ -74,6 +74,10 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 				?><ul id="<?php echo $field_name; ?>_results" class="cmb-ajax-search-results cmb-<?php echo $object_to_search; ?>-ajax-search-results"><?php
 
 				if( isset( $value ) && ! empty( $value ) ){
+
+                    if( ! is_array( $value ) && strpos( $value, ', ' ) ) {
+                        $value = explode(', ', $value);
+                    }
 					if( ! is_array( $value ) ) {
 						$value = array( $value );
 					}
@@ -102,7 +106,7 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 
 				echo $field_type->input( array(
 					'type' 	=> 'hidden',
-					'name' 	=> $field_name,
+					'name' 	=> $field->_name(),
 					'value' => $value,
 					'desc'	=> false
 				) );
@@ -171,6 +175,7 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 		 * Optionally save the latitude/longitude values into two custom fields
 		 */
 		public function sanitize( $override_value, $value, $object_id, $field_args ) {
+		error_log($field_args['id']);
             if ( !is_array( $value ) || !( array_key_exists('repeatable', $field_args ) && $field_args['repeatable'] == TRUE ) ) {
                 return $override_value;
             }
