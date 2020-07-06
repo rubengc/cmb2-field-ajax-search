@@ -27,7 +27,7 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 		/**
 		 * Current version number
 		 */
-		const VERSION = '1.0.2';
+		const VERSION = '1.0.3';
 
 		/**
 		 * Initialize the plugin by hooking into CMB2
@@ -46,7 +46,7 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
             add_filter( 'cmb2_pre_field_display_term_ajax_search', array( $this, 'display' ), 10, 3 );
 
 			// Sanitize
-			add_action( 'cmb2_sanitize_post_ajax_search', array( $this, 'sanitize' ), 10, 4 );
+ 			add_action( 'cmb2_sanitize_post_ajax_search', array( $this, 'sanitize' ), 10, 4 );
 			add_action( 'cmb2_sanitize_user_ajax_search', array( $this, 'sanitize' ), 10, 4 );
 			add_action( 'cmb2_sanitize_term_ajax_search', array( $this, 'sanitize' ), 10, 4 );
 
@@ -54,17 +54,25 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 			add_action( 'wp_ajax_cmb_ajax_search_get_results', array( $this, 'get_results' ) );
 		}
 
+		public function convert_as_id_css( $name ) {
+            return str_replace( '__', '_', str_replace( '[', '_', str_replace( ']', '_', $name ) ) );
+		}
+
 		/**
 		 * Render field
 		 */
 		public function render( $field, $value, $object_id, $object_type, $field_type ) {
-			$field_name = $field->_name();
+			$field_name = $this->convert_as_id_css($field->_name());
             $default_limit = 1;
 
             // Current filter is cmb2_render_{$object_to_search}_ajax_search ( post, user or term )
 			$object_to_search = str_replace( 'cmb2_render_', '', str_replace( '_ajax_search', '', current_filter() ) );
 
-			if( $field->args( 'multiple' ) == true ) {
+            if( ! is_array( $value ) && strpos( $value, ', ' ) ) {
+                $value = explode(', ', $value);
+            }
+
+			if( $field->args( 'multiple-item' ) == true ) {
                 $default_limit = -1; // 0 or -1 means unlimited
 
 				?><ul id="<?php echo $field_name; ?>_results" class="cmb-ajax-search-results cmb-<?php echo $object_to_search; ?>-ajax-search-results"><?php
@@ -78,9 +86,9 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
                         ?>
 						<li>
                             <?php if( $field->args( 'sortable' ) ) : ?><span class="hndl"></span><?php endif; ?>
-                            <input type="hidden" name="<?php echo $field_name; ?>[]" value="<?php echo $val; ?>">
-                            <a href="<?php echo $this->object_link( $field_name, $val, $object_to_search ); ?>" target="_blank" class="edit-link">
-                                <?php echo $this->object_text( $field_name, $val, $object_to_search ); ?>
+                            <input type="hidden" name="<?php echo $field->_name(); ?>[]" value="<?php echo $val; ?>">
+                            <a href="<?php echo $this->object_link( $field->_name(), $val, $object_to_search ); ?>" target="_blank" class="edit-link">
+                                <?php echo $this->object_text( $field->_name(), $val, $object_to_search ); ?>
                             </a>
                             <a class="remover"><span class="dashicons dashicons-no"></span><span class="dashicons dashicons-dismiss"></span></a>
                         </li>
@@ -98,7 +106,7 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 
 				echo $field_type->input( array(
 					'type' 	=> 'hidden',
-					'name' 	=> $field_name,
+					'name' 	=> $field->_name(),
 					'value' => $value,
 					'desc'	=> false
 				) );
@@ -108,12 +116,12 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 
 			echo $field_type->input( array(
 				'type' 				=> 'text',
-				'name' 				=> $field_name . '_input',
-				'id'				=> $field_name . '_input',
+				'name' 				=> '_' . $field->_name(),
+				'id'				=> $field_name,
 				'class'				=> 'cmb-ajax-search cmb-' . $object_to_search . '-ajax-search',
 				'value' 			=> $input_value,
 				'desc'				=> false,
-				'data-multiple'		=> $field->args( 'multiple' ) ? $field->args( 'multiple' ) : '0',
+				'data-multiple'		=> $field->args( 'multiple-item' ) ? $field->args( 'multiple-item' ) : '0',
 				'data-limit'		=> $field->args( 'limit' ) ? $field->args( 'limit' ) : $default_limit,
 				'data-sortable'		=> $field->args( 'sortable' ) ? $field->args( 'sortable' ) : '0',
 				'data-object-type'	=> $object_to_search,
@@ -167,15 +175,16 @@ if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 		 * Optionally save the latitude/longitude values into two custom fields
 		 */
 		public function sanitize( $override_value, $value, $object_id, $field_args ) {
-			$fid = $field_args['id'];
+            if ( !is_array( $value ) || !( array_key_exists('repeatable', $field_args ) && $field_args['repeatable'] == TRUE ) ) {
+                return $override_value;
+            }
 
-			if($field_args['render_row_cb'][0]->data_to_save[$field_args['id']]) {
-				$value = $field_args['render_row_cb'][0]->data_to_save[$field_args['id']];
-			} else {
-				$value = false;
-			}
+            $new_values = array();
+            foreach ( $value as $key => $val ) {
+                $new_values[$key] = array_filter( array_map( 'sanitize_text_field', $val ) );
+            }
 
-			return $value;
+            return array_filter( array_values( $new_values ) );
 		}
 
 		/**
