@@ -17,6 +17,10 @@
 // This plugin is based on CMB2 Field Type: Post Search Ajax (https://github.com/alexis-magina/cmb2-field-post-search-ajax)
 // Special thanks to Magina (http://magina.fr/) for him awesome work
 
+if ( ! function_exists( 'add_action' ) ) {
+	return;
+}
+
 if( ! class_exists( 'CMB2_Field_Ajax_Search' ) ) {
 
 	/**
