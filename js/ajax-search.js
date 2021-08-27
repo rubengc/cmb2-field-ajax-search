@@ -49,13 +49,13 @@
 				},
 				onSelect: function ( suggestion ) {
 					$(this).devbridgeAutocomplete('clearCache');
-                    
+
 					var field_name  = $(this).attr('name');
 					var multiple 	= $(this).attr('data-multiple');
 					var limit 	    = parseInt( $(this).attr('data-limit') );
 					var sortable    = $(this).attr('data-sortable');
                     var field_name_temp = field_name.substring(1).replace( /[\[\]']+/g, '_' );
-                    
+
 					if( multiple == 1 ) {
 						// Multiple
 						$('#' + field_name_temp + '_results' ).append( '<li>' +
@@ -69,13 +69,13 @@
 
 						// Checks if there is the max allowed results, limit < 0 means unlimited
 						if( limit > 0 && limit == $('#' + field_name_temp + '_results li').length ) {
-							$(this).prop( 'disabled', 'disabled' );
+							$(this).attr( 'disabled', 'disabled' );
 						} else {
 							$(this).focus();
 						}
 					} else {
 						// Singular
-						$('input[name="' + field_name + '"]').val( suggestion.id ).change();
+						$('input[name="' + field_name + '"]').val( suggestion.id ).trigger('change');
 					}
 				}
 			},
@@ -108,10 +108,10 @@
 
 	// On click remover listener
 	$('body').on( 'click', '.cmb-ajax-search-results a.remover', function() {
-		$(this).parent('li').fadeOut( 400, function(){ 
+		$(this).parent('li').fadeOut( 400, function(){
 			var field_id = $(this).parents('ul').attr('id').replace('_results', '');
 
-			$('#' + field_id).removeProp( 'disabled' );
+			$('#' + field_id).removeAttr( 'disabled' );
 			$('#' + field_id).devbridgeAutocomplete('clearCache');
 
             $(this).remove();
