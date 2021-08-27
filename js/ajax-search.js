@@ -75,7 +75,8 @@
 						}
 					} else {
 						// Singular
-						$('input[name="' + field_name + '"]').val( suggestion.id ).trigger('change');
+                        $('input[name="' + field_name.substring(1) + '"]').val( suggestion.id );
+						$('input[name="' + field_name + '"]').val( suggestion.value ).focus();
 					}
 				}
 			},
