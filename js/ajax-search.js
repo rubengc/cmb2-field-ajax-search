@@ -96,7 +96,9 @@
 
 	// Initialize on group fields add row
 	$( document ).on( 'cmb2_add_row', function( evt, $row ) {
+		var field_id = $row.find('.cmb-post-ajax-search-results').attr('id');
 		$row.find('.cmb-ajax-search').attr('data-ajax-search', false);
+		$('#' + field_id).empty();
 
 		init_ajax_search();
 	});
